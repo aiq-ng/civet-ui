@@ -32,7 +32,7 @@ export class HeaderComponent {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
                     command: () => {
-                      // pass a function here
+                      this.router.navigate(['/auth/login'])
                   }
                 }
                 ]

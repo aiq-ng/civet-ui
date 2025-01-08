@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   loading: boolean = false;
   hidePassword: boolean = true;
 
-  constructor(private auth: AuthService, private fb: FormBuilder){}
+  constructor(private auth: AuthService, private router:Router, private fb: FormBuilder){}
 
   ngOnInit(){
     this.loginForm = this.fb.group({
@@ -25,24 +26,26 @@ export class LoginComponent {
   get f(){return this.loginForm.controls;}
 
   login(){
-    this.isSubmitted = true;
     this.loading = true;
+    this.router.navigate(['/app/home'])
+    // this.isSubmitted = true;
+    // this.loading = true;
 
-    if(this.loginForm.invalid){
-      this.loading = false;
-      return;
-    }
+    // if(this.loginForm.invalid){
+    //   this.loading = false;
+    //   return;
+    // }
 
-    this.auth.login(this.loginForm.value).subscribe(
-      (res) => {
-        console.log(res);
-        this.loading = false;
-      },
-      (err) => {
-        console.error(err);
-        this.loading = false;
-      }
-    );
+    // this.auth.login(this.loginForm.value).subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //     this.loading = false;
+    //   },
+    //   (err) => {
+    //     console.error(err);
+    //     this.loading = false;
+    //   }
+    // );
   }
 
   viewPassword(){
