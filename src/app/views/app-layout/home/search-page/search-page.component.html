@@ -1,0 +1,115 @@
+<div class="card flex justify-content-center">
+  <p-breadcrumb
+      class="max-w-full"
+      [model]="items"
+      [home]="home"/>
+</div>
+
+<div *ngIf="keepSearching" class="search-item mt-6">
+    <!-- Card -->
+    <a class="group flex flex-col bg-white w-fit border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition " >
+      <div class="p-2 ">
+        <div class="flex justify-between items-center gap-x-3">
+          <div class="grow">
+            <div class="flex items-center gap-x-3">
+              <img class="size-[38px] rounded-full" src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Avatar">
+              <div class="grow">
+                <h3 class="font-normal text-gray-800 ">
+                  Search Item
+                </h3>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </a>
+    <!-- End Card -->
+</div>
+
+<div class="keep-searching">
+  <div class="mt-6">
+    <p-card styleClass="">
+      <ng-template pTemplate="headless">
+
+      <div class="w-full flex flex-col lg:flex-row gap-4 lg:gap-0 justify-between">
+        <div class="flex gap-4 items-center text-gray-500">
+          <span>Keep searching for the next</span>
+          <div class="flex gap-1">
+            <span class="text-xl px-4 py-1 cursor-pointer hover:bg-gray-100 active:bg-gray-50 rounded-md">-</span>
+            <span class="border px-4 py-1">{{searchTime}}</span>
+            <span class="text-xl px-4 py-1 cursor-pointer hover:bg-gray-100 active:bg-gray-50 rounded-md">+</span>
+          </div>
+        </div>
+        <div>
+          <button *ngIf="!keepSearching" (click)="continueSearching()" class="bg-secondary px-4 py-2 text-white rounded-md text-sm active:bg-secondary/85">Keep searching</button>
+          <button *ngIf="keepSearching" (click)="toggleModal('stopSearch')" class="bg-secondary px-4 py-2 text-white rounded-md text-sm active:bg-secondary/85">Stop searching</button>
+        </div>
+      </div>
+
+      </ng-template>
+    </p-card>
+
+  </div>
+</div>
+
+<div class="title text-xl pt-6">Search Results({{cameras.length}})</div>
+
+
+<!-- <div class="flex flex-col flex-shrink-0 flex-grow-1 gap-4 mt-6" >
+
+  <ng-container *ngFor="let camData of cameras">
+    <div class="date mt-4">{{camData.date}}</div>
+    <div class="flex gap-4 flex-wrap flex-grow-1 flex-shrink-1">
+      <ng-container *ngFor="let camera of camData.data">
+        <div (click)="route('app/search-detail/1')" class="group flex flex-col  w-full max-w-[200px] mr-2 h-full bg-white border border-gray-200 shadow-sm rounded-xl   ">
+          <div class="h-[130px] flex flex-col justify-center items-center bg-gray-100 rounded-t-xl">
+            <img src="" class="w-[100px] h-[100px]" alt="SNAPSHOT">
+          </div>
+          <div class="p-4 ">
+            <div class="details flex flex-col gap-1">
+              <div class="camera-name">{{camera.cameraName}}</div>
+              <div class="camera-location text-gray-700 flex gap-1 items-center text-sm">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                  </svg>
+                </span>
+                <span>{{camera.location}}</span>
+              </div>
+              <div class="camera-uptime text-sm text-gray-700">
+                <span class="text-gray-600">Uptime: </span>
+                <span>{{camera.uptime}}</span>
+              </div>
+              <div class="camera-status mt-4">
+                <span *ngIf="camera.status=='Online'" class="px-4 py-1 text-xs bg-success/25 text-success rounded-full">
+                  {{camera.status}}
+                </span>
+
+                <span *ngIf="camera.status=='Offline'" class="px-4 py-1 text-xs bg-red-200 text-red-600 rounded-full">
+                  {{camera.status}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+
+</div> -->
+
+
+
+<app-empty-page message="I’m sorry...I got nothing.
+Adjust your search filters and try again?" buttonName="Back to search" (buttonAction)="route('/app/home')"></app-empty-page>
+
+
+<div class="modal">
+  <app-warning-modal [visible]="isWarning" button1="Cancel" button2="Continue" (action1)="toggleModal('')" (action2)="toggleModal('terminateSearch')"   message="The ongoing search will be terminated."></app-warning-modal>
+  <app-warning-modal [visible]="isTerminateSearch" button1="Cancel" button2="Continue" (action1)="toggleModal('')" (action2)="terminateSearch()"  message=""></app-warning-modal>
+  <app-success-modal [visible]="isSuccess" homeButton="Home" (homeAction)="route('/app/home')"   message="Search terminated"></app-success-modal>
+</div>

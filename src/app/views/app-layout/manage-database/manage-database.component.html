@@ -1,0 +1,15 @@
+<div class="section">
+    <div class="videos">
+        <div class="header pt-6 grid grid-cols-1 lg:grid-cols-2">
+          <div class="title text-2xl text-gray-800">Database</div>
+            <app-search-upload-header></app-search-upload-header>
+        </div>
+
+        <div class="pt-6 grid grid-cols-4 gap-4">
+          <ng-container  *ngFor="let row of names">
+            <app-image-card [imageTitle]=row></app-image-card>
+          </ng-container>
+        </div>
+
+    </div>
+</div>

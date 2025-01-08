@@ -1,0 +1,108 @@
+<div class="section ">
+
+    <!-- page title section -->
+    <div class="page-title pt-8 pb-4  w-full flex justify-between">
+        <div class="title text-2xl text-gray-800 flex gap-2 items-center">
+            <span class="font-bold">Video 04</span>
+            <span class="active:scale-95 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+            </span>
+        </div>
+
+        <div class="button flex gap-2 text-sm border border-gray-400 rounded-md font-semibold active:scale-95 px-4 py-2">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+                    <path d="M11 2H9v3h2z"/>
+                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                  </svg>
+            </span>
+            <span>Save</span>
+        </div>
+
+    </div>
+
+    <!-- body section -->
+    <div class="flex flex-col lg:flex-row gap-10">
+        <div class="section-one w-full md:w-full lg:w-[65%] h-fit">
+            <!-- video player section -->
+             <div class="video-player relative flex items-center bg-white w-full h-[70%]">
+              <div class=" w-full">
+                <video #videoElement autoplay controls class="w-full h-full min-h-[400px] rounded-lg shadow-lg">
+                  <source src="your-video.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class=" bg-transparent bg-white  absolute top-[20%] left-[20px] rounded-md m-h-[150px] p-4 ">
+                <div class="flex flex-col gap-2 text-gray-800">
+                  <button class="flex gap-2 items-center text-sm " (click)="startStream()">
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cast" viewBox="0 0 16 16">
+                        <path d="m7.646 9.354-3.792 3.792a.5.5 0 0 0 .353.854h7.586a.5.5 0 0 0 .354-.854L8.354 9.354a.5.5 0 0 0-.708 0"/>
+                        <path d="M11.414 11H14.5a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5h-13a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h3.086l-1 1H1.5A1.5 1.5 0 0 1 0 10.5v-7A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v7a1.5 1.5 0 0 1-1.5 1.5h-2.086z"/>
+                      </svg>
+                    </span>
+
+                    <span class="hidden">
+                      Start Stream
+                    </span>
+
+                  </button>
+                  <button class="flex gap-2 items-center text-sm " (click)="stopStream()">
+                    <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stop-btn" viewBox="0 0 16 16">
+                        <path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5z"/>
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                      </svg>
+                    </span>
+
+                    <span class="hidden">
+                      Stop Stream
+                    </span>
+
+                  </button>
+                </div>
+              </div>
+             </div>
+
+
+
+
+
+             <div class="alert  mt-6 h-[67vh] overflow-y-auto custom-scrollbar" >
+                <div class="mb-4">
+                    <app-section-title title="Alerts" count='13'></app-section-title>
+                </div>
+                <div class=" bg-white" *ngFor="let row of alertData">
+                    <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
+                </div>
+             </div>
+        </div>
+        <div class="section-two w-full md:w-full lg:w-[35%] h-[92vh]">
+
+            <div class="h-[55%] overflow-y-auto custom-scrollbar">
+                <div class="mb-4">
+                    <app-section-title title="Active feeds" count='5'></app-section-title>
+                </div>
+                <div class="bg-white px-4 py-2" *ngFor="let row of alertData">
+                    <div class="flex flex-col gap-2 pt-2">
+                        <app-video-list></app-video-list>
+                    </div>
+                </div>
+             </div>
+
+             <div class="alert  mt-6 h-[80vh] overflow-y-auto custom-scrollbar" >
+                <div class="mb-4">
+                    <app-section-title title="Other alerts" count='5'></app-section-title>
+                </div>
+                <div class=" bg-white" *ngFor="let row of alertData">
+                    <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
+                </div>
+             </div>
+
+        </div>
+    </div>
+</div>

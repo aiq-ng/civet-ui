@@ -1,0 +1,69 @@
+<div class="card flex justify-content-center">
+  <p-breadcrumb
+      class="max-w-full"
+      [model]="items"
+      [home]="home"/>
+</div>
+
+
+<div class="mt-8">
+  <p-card>
+    <ng-template pTemplate="headless">
+
+      <div class="grid grid-cols-2 gap-6">
+        <div class="snapshot bg-gray-100 min-h-[300px] rounded-lg p-4">snapshot</div>
+        <div class="add-to-db">
+          <div class="title text-lg">Add to database</div>
+
+          <form class="flex flex-col gap-3 mt-4">
+            <div class="flex flex-col">
+              <label for="name" class="text-gray-800">Name</label>
+              <input type="text" class="px-4 py-2 w-full max-w-[400px] rounded-md border text-gray-500 " placeholder="Placeholder">
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="">Data type</label>
+              <div class="flex gap-2">
+                <span class="px-4 py-1 rounded-full bg-gray-100 text-sm text-gray-600">License Plate</span>
+                <span class="px-4 py-1 rounded-full bg-blue-100 text-sm text-gray-600">Facial recognition</span>
+                <span class="px-4 py-1 rounded-full bg-green-100 text-sm text-gray-600">Pet</span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <p-button (onClick)="addToDB()" label="Add to database" [loading]="loading" styleClass="px-4 py-2 rounded-lg text-sm text-white bg-secondary"></p-button>
+            </div>
+          </form>
+        </div>
+        </div>
+    </ng-template>
+  </p-card>
+
+  <div class="p-4 ">
+    <div class="details flex flex-col gap-2">
+      <div class="camera-name">{{camera.cameraName}}</div>
+      <div class="camera-location text-gray-700 flex gap-1 items-center text-sm">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+          </svg>
+        </span>
+        <span>{{camera.location}}</span>
+      </div>
+      <div class="camera-uptime text-sm text-gray-700 mt-6">
+        <span>{{camera.uptime}}</span>
+      </div>
+      <div class="camera-uptime text-sm text-gray-700">
+        <span>{{camera.date}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal">
+  <app-success-modal [visible]="isSuccess" homeButton="Back" (otherAction)="route('/app/manage-database')" (homeAction)="goBack()" otherButton="view in database" message="The data has been added to database"></app-success-modal>
+</div>

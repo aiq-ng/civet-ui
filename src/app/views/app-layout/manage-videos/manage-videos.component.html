@@ -1,0 +1,13 @@
+<div class="section">
+  <div class="videos">
+    <div class="header pt-8">
+      <app-search-upload-header></app-search-upload-header>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <span routerLink="/app/video-report" *ngFor="let row of videos">
+        <app-video-card [videoTitle]="row.video_title" [dateCreated]="row.date_created"></app-video-card>
+      </span>
+    </div>
+  </div>
+</div>

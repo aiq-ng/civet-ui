@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import "../public/assets/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+
+
+// styles.scss
+@layer tailwind-base,
+primeng,
+tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer primeng; //not necessary I think
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inter {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,0 +1,118 @@
+<!-- ========== MAIN CONTENT ========== -->
+<!-- Breadcrumb -->
+<div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden">
+    <div class="flex items-center py-2">
+      <!-- Navigation Toggle -->
+      <button type="button" class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar" aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
+        <span class="sr-only">Toggle Navigation</span>
+        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/><path d="m8 9 3 3-3 3"/></svg>
+      </button>
+      <!-- End Navigation Toggle -->
+
+      <!-- Breadcrumb -->
+      <ol class="ms-3 flex items-center whitespace-nowrap">
+        <li class="flex items-center text-sm text-gray-800">
+          Application Layout
+          <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </li>
+        <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
+          Dashboard
+        </li>
+      </ol>
+      <!-- End Breadcrumb -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Sidebar -->
+  <div id="hs-application-sidebar" class="hs-overlay [--auto-close:lg]
+    hs-overlay-open:translate-x-0
+    -translate-x-full transition-all duration-300 transform
+    w-[260px] h-full
+    hidden
+    fixed inset-y-0 start-0 z-[60]
+    bg-gray-900
+    lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
+   " role="dialog" tabindex="-1" aria-label="Sidebar">
+    <div class="relative flex flex-col h-full max-h-full">
+      <div class="px-8 pt-8 pb-4">
+        <!-- Logo -->
+        <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"  aria-label="Preline">
+            <span class="3xl text-white font-bold">Civet</span>
+        </a>
+        <!-- End Logo -->
+      </div>
+
+      <!-- Content -->
+      <div class="h-full flex flex-col justify-between  overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
+        <nav class="hs-accordion-group p-3 w-full flex flex-col flex-wrap cursor-pointer" data-hs-accordion-always-open>
+          <ul class="flex flex-col space-y-1">
+            <li routerLink="/app/home" routerLinkActive="active" >
+              <a  class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
+                </svg>
+                Video Coverage
+              </a>
+            </li>
+<!--
+            <li routerLink="/app/live-video-monitoring" routerLinkActive="active">
+              <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-play" viewBox="0 0 16 16">
+                <path d="M6 10.117V5.883a.5.5 0 0 1 .757-.429l3.528 2.117a.5.5 0 0 1 0 .858l-3.528 2.117a.5.5 0 0 1-.757-.43z"/>
+                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+              </svg>
+              Live Video Monitoring
+              </a>
+            </li> -->
+            <!-- <li routerLink="/app/manage-videos"  routerLinkActive="active">
+              <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z"/>
+              </svg>
+              Manage Videos
+            </a>
+          </li> -->
+
+            <li routerLink="/app/manage-database"  routerLinkActive="active">
+              <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database" viewBox="0 0 16 16">
+                  <path d="M4.318 2.687C5.234 2.271 6.536 2 8 2s2.766.27 3.682.687C12.644 3.125 13 3.627 13 4c0 .374-.356.875-1.318 1.313C10.766 5.729 9.464 6 8 6s-2.766-.27-3.682-.687C3.356 4.875 3 4.373 3 4c0-.374.356-.875 1.318-1.313M13 5.698V7c0 .374-.356.875-1.318 1.313C10.766 8.729 9.464 9 8 9s-2.766-.27-3.682-.687C3.356 7.875 3 7.373 3 7V5.698c.271.202.58.378.904.525C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777A5 5 0 0 0 13 5.698M14 4c0-1.007-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1s-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4v9c0 1.007.875 1.755 1.904 2.223C4.978 15.71 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13zm-1 4.698V10c0 .374-.356.875-1.318 1.313C10.766 11.729 9.464 12 8 12s-2.766-.27-3.682-.687C3.356 10.875 3 10.373 3 10V8.698c.271.202.58.378.904.525C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777A5 5 0 0 0 13 8.698m0 3V13c0 .374-.356.875-1.318 1.313C10.766 14.729 9.464 15 8 15s-2.766-.27-3.682-.687C3.356 13.875 3 13.373 3 13v-1.302c.271.202.58.378.904.525C4.978 12.71 6.427 13 8 13s3.022-.289 4.096-.777c.324-.147.633-.323.904-.525"/>
+                </svg>
+                Database
+              </a>
+            </li>
+
+            <!-- <li routerLink="/app/analyse-video"  routerLinkActive="active">
+              <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                  <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zM1 7v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
+                </svg>
+                Analyse Video
+              </a></li> -->
+
+
+          </ul>
+        </nav>
+
+
+      </div>
+      <!-- End Content -->
+    </div>
+  </div>
+  <!-- End Sidebar -->
+
+  <!-- Content -->
+  <div class="w-full px-4 sm:px-6 md:px-8 lg:ps-72">
+    <div class="">
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+
+    </div>
+  </div>
+  <!-- End Content -->
+  <!-- ========== END MAIN CONTENT ========== -->
+
+

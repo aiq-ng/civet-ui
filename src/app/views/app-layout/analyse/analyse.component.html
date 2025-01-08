@@ -1,0 +1,81 @@
+<div class="section ">
+
+    <!-- page title section -->
+    <div class="page-title pt-8 pb-4  w-full flex justify-between">
+        <div class="title text-2xl flex gap-2 items-center">
+            <span class="font-bold">Video 04</span>
+            <span class="active:scale-95 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+            </span>
+        </div>
+
+        <div class="button flex gap-2 text-sm border border-gray-400 rounded-md font-semibold active:scale-95 px-4 py-2">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+                    <path d="M11 2H9v3h2z"/>
+                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                  </svg>
+            </span>
+            <span>Save</span>
+        </div>
+
+    </div>
+
+    <!-- body section -->
+    <div class="flex gap-4">
+        <div class="section-one w-[70%] h-[92vh]">
+            <!-- video player section -->
+             <div class="video-player bg-white w-full h-[70%]">
+
+             </div>
+
+
+             <div class="alert  mt-6 h-[67vh] overflow-y-auto custom-scrollbar" >
+                <div class="mb-4">
+                    <app-section-title title="Alerts" count='13'></app-section-title>
+                </div>
+                <div class=" bg-white" *ngFor="let row of alertData">
+                    <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
+                </div>
+             </div>
+        </div>
+        <div class="section-two w-[30%] max-h-[92vh]">
+
+            <div class="max-h-[100%] overflow-y-auto custom-scrollbar">
+                <div class="mb-4">
+                    <app-section-title title="Queues" count='0'></app-section-title>
+                </div>
+                <div class=" bg-white p-4 rounded-md" *ngIf="videos.length<=0">
+                  There is no video on the Queue
+              </div>
+                <div class="bg-white px-2" *ngFor="let row of videos">
+
+                    <div class="flex flex-col gap-2 pt-2">
+                        <app-video-list></app-video-list>
+                    </div>
+
+                </div>
+             </div>
+
+            <div class="flex w-full justify-end active:scale-95">
+                <button class="mt-8 flex gap-2 px-4 text-sm border border-gray-400 py-2 rounded-md items-center">
+                    <span>
+                        Add video
+                    </span>
+
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                          </svg>
+                    </span>
+                </button>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
