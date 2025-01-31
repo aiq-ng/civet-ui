@@ -1,15 +1,60 @@
 
 
+<div *ngIf="cameras.length<=3" class="card w-full">
+  <div class="w-full grid grid-cols-3">
+    <ng-container *ngFor="let camera of cameras">
+      <!-- Card -->
+      <div class="p-2">
+        <div class="group flex flex-col  w-full mr-2 h-full bg-white border border-gray-200 shadow-sm rounded-xl   ">
+          <div class="h-[130px] flex flex-col justify-center items-center bg-gray-100 rounded-t-xl">
+            <img src="/assets/images/cctv.png" class="w-[100px] h-[100px]" alt="">
+          </div>
+          <div class="p-4 ">
+            <div class="details flex flex-col gap-1">
+              <div class="camera-name">{{camera.cameraName}}</div>
+              <div class="camera-location text-gray-700 flex gap-1 items-center text-sm">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                  </svg>
+                </span>
+                <span>{{camera.location}}</span>
+              </div>
+              <div class="camera-uptime text-sm text-gray-700">
+                <span class="text-gray-600">Uptime: </span>
+                <span>{{camera.uptime}}</span>
+              </div>
+              <div class="camera-status mt-4">
+                <span *ngIf="camera.status=='Online'" class="px-4 py-1 text-xs bg-success/25 text-success rounded-full">
+                  {{camera.status}}
+                </span>
+
+                <span *ngIf="camera.status=='Offline'" class="px-4 py-1 text-xs bg-red-200 text-red-600 rounded-full">
+                  {{camera.status}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    <!-- End Card -->
+    </ng-container>
+  </div>
+</div>
 
 
-<div class="card">
+
+
+<div *ngIf="cameras.length>3" class="card w-full">
   <p-carousel
       [value]="cameras"
-      [numVisible]="4"
+      [numVisible]="5"
       [numScroll]="1"
       [circular]="false"
       [responsiveOptions]="responsiveOptions">
-          <ng-template let-camera pTemplate="item">
+      <ng-template let-camera pTemplate="item">
               <!-- Card -->
 <div class="p-2">
   <div class="group flex flex-col  w-full mr-2 h-full bg-white border border-gray-200 shadow-sm rounded-xl   ">

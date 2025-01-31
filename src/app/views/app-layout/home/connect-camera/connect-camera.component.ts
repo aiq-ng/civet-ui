@@ -1,6 +1,9 @@
+import { StorageService } from './../../../../../../../../dicon-ui/src/app/services/storage.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { HttpServiceService } from '../../../../services/http-service.service';
 
 @Component({
   selector: 'app-connect-camera',
@@ -12,10 +15,10 @@ export class ConnectCameraComponent {
 
   home: MenuItem | undefined;
   loading: boolean = false;
-
+  cameraForm:any;
   visible: boolean = false;
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private fb:FormBuilder, private api:HttpServiceService, private storage:StorageService){}
 
     ngOnInit() {
         this.items = [
@@ -24,6 +27,32 @@ export class ConnectCameraComponent {
         ];
 
         this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
+
+        this.cameraForm = this.fb.group({
+          camera_name: [''],
+          imei: [''],
+          password: [''],
+          location: ['Main street'],
+          status: ['down'],
+          uptime: ['online']
+
+        });
+    }
+
+
+    saveCamera(){
+      this.loading = true;
+      this.api.post('cameras/', this.cameraForm.value).subscribe(
+        res=>{
+          console.log(res);
+          this.route('app/home');
+          this.loading = false;
+        }, err=>{
+          console.log(err);
+          this.loading = false;
+        }
+      )
+
     }
 
     showDialog() {

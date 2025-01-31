@@ -11,6 +11,8 @@ import { AnalyseComponent } from './analyse/analyse.component';
 import { ConnectCameraComponent } from './home/connect-camera/connect-camera.component';
 import { SearchPageComponent } from './home/search-page/search-page.component';
 import { SearchDetailComponent } from './home/search-detail/search-detail.component';
+import { VideoPlayerComponent } from '../../shared/video-player/video-player.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -21,7 +23,8 @@ const routes: Routes = [
       {path: 'cameras', component: ConnectCameraComponent},
       {path: 'manage-database', component: ManageDatabaseComponent},
       {path: 'search-page', component: SearchPageComponent},
-      {path: 'search-detail/:id', component: SearchDetailComponent},
+      {path: 'notifications', component: NotificationComponent},
+      {path: 'live', component: LiveVideoMonitoringComponent},
 
     ]
   }

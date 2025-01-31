@@ -28,7 +28,7 @@
     <div class="flex flex-col lg:flex-row gap-10">
         <div class="section-one w-full md:w-full lg:w-[65%] h-fit">
             <!-- video player section -->
-             <div class="video-player relative flex items-center bg-white w-full h-[70%]">
+             <!-- <div class="video-player relative flex items-center bg-white w-full h-[70%]">
               <div class=" w-full">
                 <video #videoElement autoplay controls class="w-full h-full min-h-[400px] rounded-lg shadow-lg">
                   <source src="your-video.mp4" type="video/mp4">
@@ -66,10 +66,10 @@
                   </button>
                 </div>
               </div>
-             </div>
+             </div> -->
 
 
-
+             <video #remoteVideo autoplay playsinline></video>
 
 
              <div class="alert  mt-6 h-[67vh] overflow-y-auto custom-scrollbar" >
@@ -94,7 +94,7 @@
                 </div>
              </div>
 
-             <div class="alert  mt-6 h-[80vh] overflow-y-auto custom-scrollbar" >
+             <div class="alert  mt-12 h-[80vh] overflow-y-auto custom-scrollbar" >
                 <div class="mb-4">
                     <app-section-title title="Other alerts" count='5'></app-section-title>
                 </div>

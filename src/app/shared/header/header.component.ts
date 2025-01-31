@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig} from 'primeng/api';
+import { CameraService } from '../../services/camera.service';
+import { HttpServiceService } from '../../services/http-service.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-header',
@@ -10,17 +13,24 @@ import { MessageService, PrimeNGConfig} from 'primeng/api';
 })
 export class HeaderComponent {
   items: any;
-  files = [];
-  cameras: string[] = [];
+  file:any;
+  cameras?: any = [];
+  selelctedCameras:any = []
+  keyword:string = "";
   checkAll: any;
   totalSize : number = 0;
   loading:boolean = false;
+  searchType: string = ''
+  isCheck: boolean = false;
 
   totalSizePercent : number = 0;
 
   constructor(private config: PrimeNGConfig,
               private messageService: MessageService,
-              private router:Router) {}
+              private router:Router,
+              private camera:CameraService,
+              private api: HttpServiceService,
+              private searchService: SearchService) {}
 
 
     ngOnInit() {
@@ -38,6 +48,13 @@ export class HeaderComponent {
                 ]
             }
         ];
+        console.log('header activated');
+        this.camera.getCameras().subscribe(
+          res=>{
+            this.cameras = res;
+            console.log('connected cameras', this.cameras);
+          }
+        )
     }
 
     route(page:string){
@@ -45,50 +62,80 @@ export class HeaderComponent {
       this.router.navigate([page]);
     }
 
-    choose(event:any, callback:any) {
-      callback();
+
+  handleSearch(){
+    this.search()
+    this.saveSearchHistory();
+    this.route('/app/search-page')
   }
 
-  onRemoveTemplatingFile(event:any, file:any, removeFileCallback:any, index:any) {
-      removeFileCallback(event, index);
-      this.totalSize -= parseInt(this.formatSize(file.size));
-      this.totalSizePercent = this.totalSize / 10;
+  search(){
+    // this.loading = true;
   }
 
-  onClearTemplatingUpload(clear:any) {
-      clear();
-      this.totalSize = 0;
-      this.totalSizePercent = 0;
-  }
+  saveSearchHistory(){
+    this.loading = true;
+    let formData = new FormData
+    if(this.keyword == ''){
+      formData.append('search_keyword', 'image')
+    }else{
+      formData.append('search_keyword', this.keyword)
+    }
+    formData.append('object_type', this.searchType)
+    formData.append('camera', JSON.stringify(this.selelctedCameras));
+    formData.append('image', this.file);
 
-  onTemplatedUpload() {
-      this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-  }
+    console.log('form data', formData);
 
-  onSelectedFiles(event:any) {
-      this.files = event.currentFiles;
-      this.files.forEach((file:any) => {
-          this.totalSize += parseInt(this.formatSize(file.size));
-      });
-      this.totalSizePercent = this.totalSize / 10;
-  }
-
-  uploadEvent(callback:any) {
-      callback();
-  }
-
-  formatSize(bytes:any) {
-      const k = 1024;
-      const dm = 3;
-      const sizes:any = this.config.translation.fileSizeTypes;
-      if (bytes === 0) {
-          return `0 ${sizes[0]}`;
+    this.api.post('search-history/', formData).subscribe(
+      res=>{
+        console.log('search history saved', res);
+        this.loading = false;
+        this.searchService.setSearchQuery(formData);
+      }, err=>{
+        console.log('error saving search history', err);
+        this.searchService.setSearchQuery(formData);
+        this.loading = false;
       }
+    )
+  }
 
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+  checkAllCamera(){
+    if(this.selelctedCameras.length === this.cameras.length){
+      this.selelctedCameras = [];
+      console.log('selected cameras', this.selelctedCameras)
+      this.checkAll = false;
+    }else{
+      this.selelctedCameras = [...this.cameras];
+      console.log('selected cameras', this.selelctedCameras)
+        // for(let camera of this.cameras){
+        //   this.selelctedCameras.push(camera);
+        // }
+    }
 
-      return `${formattedSize} ${sizes[i]}`;
+  }
+
+
+  selectSearchType(type:string){
+    this.searchType = type;
+    console.log('search type selected', type)
+  }
+
+  onImageSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.file = input.files[0];
+  }
+  }
+  private validateImageFile(file: File): boolean {
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    // const allowedType = 'image/jpeg';
+
+    if (file.size > maxSize || file.type ) {
+      alert('Please upload a JPG image under 2MB');
+      return false;
+    }
+    return true;
   }
 
 

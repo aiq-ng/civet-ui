@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-video-player',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrl: './video-player.component.scss'
 })
 export class VideoPlayerComponent {
+  player:any;
+
+  ngOnInit() {
+
+  }
+
+  ngOnDestroy() {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
 
 }

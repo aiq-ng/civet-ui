@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
-  baseUrl: 'https://starters.hordun.software/'
+  baseUrl: 'http://127.0.0.1:8000/api/'
+  // baseUrl: 'https://starters.hordun.software/'
 };
 
 

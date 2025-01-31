@@ -1,3 +1,4 @@
+import { SearchService } from './../../../../services/search.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -11,97 +12,107 @@ import { MenuItem } from 'primeng/api';
 export class SearchPageComponent {
     items: MenuItem[] | undefined;
     home: MenuItem | undefined;
-    searchTime: number = 30;
+    searchTime: number = 5;
     keepSearching:boolean = false;
     isWarning:boolean  = false;
     isSuccess:boolean  = false;
     isTerminateSearch:boolean = false;
+    searchQuery: string = ''; // Holds the search query
+    searchResults: string[] = []; // Holds the search results
+    searchInterval: any; // Holds the interval ID
+    searchTimeout: any; // Holds the timeout ID
 
-    cameras = [
-      {
-        "date": "5 November",
-        "data": [
-          {
-            "cameraName": "Camera 1",
-            "location": "Main Street",
-            "uptime": "12:34:56",
-            "status": "Online"
-          },
-          {
-            "cameraName": "Camera 2",
-            "location": "Park Avenue",
-            "uptime": "02:15:32",
-            "status": "Offline"
-          }
-        ]
-      },
-      {
-        "date": "16 December",
-        "data": [
-          {
-            "cameraName": "Camera 3",
-            "location": "Highland Road",
-            "uptime": "48:12:08",
-            "status": "Online"
-          },
-          {
-            "cameraName": "Camera 4",
-            "location": "Market Square",
-            "uptime": "03:45:23",
-            "status": "Online"
-          },
-          {
-            "cameraName": "Camera 5",
-            "location": "Broadway",
-            "uptime": "27:23:19",
-            "status": "Offline"
-          },
-          {
-            "cameraName": "Camera 6",
-            "location": "Elm Street",
-            "uptime": "10:12:45",
-            "status": "Online"
-          },
-          {
-            "cameraName": "Camera 7",
-            "location": "Sunset Boulevard",
-            "uptime": "05:01:16",
-            "status": "Online"
-          },
-          {
-            "cameraName": "Camera 8",
-            "location": "Iwo Road",
-            "uptime": "24:56:23",
-            "status": "Online"
-          }
-        ]
-      }
-    ]
 
-    constructor(private router:Router){}
+
+
+
+
+    constructor(private router:Router, private searchService:SearchService){}
   ngOnInit() {
     this.items = [
         { label: 'Search results' },
 
     ];
 
+    this.searchService.searchQuery$.subscribe(
+      query => {
+        this.searchQuery = query;
+        console.log('search query', this.searchQuery)
+      }
+    )
+
     this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
+  }
+
+  increaseSearchTime(){
+    if(this.searchTime < 120){
+      this.searchTime += 10;
+    }else{
+      this.searchTime += 5;
+    }
+  }
+
+  reduceSearchTime(){
+    if(this.searchTime > 10){
+      this.searchTime -= 10;
+    } else{
+      this.searchTime -= 5;
+    }
   }
 
   route(page:any){
     this.router.navigate([page]);
   }
 
-  continueSearching(){
-    this.keepSearching = true;
-    // setTimeout(() => {
-    //   this.keepSearching = false;
-    // }, this.searchTime * 1000);
+
+  // Start the search process
+  continueSearching(): void {
+    if (!this.searchQuery) {
+      alert('Please enter a search query.');
+      return;
+    }
+
+    // Clear previous results
+    this.searchResults = [];
+
+    // Start searching every 5 seconds
+    this.searchInterval = setInterval(() => {
+      this.performSearch();
+    }, 5000); // 5000ms = 5 seconds
+
+    // Stop searching after 20 minutes (1200000ms)
+    this.searchTimeout = setTimeout(() => {
+      this.stopSearch();
+      alert(`Search completed after ${this.searchTime * 60 * 1000} minutes`);
+    }, this.searchTime * 60 * 1000); // 1200000ms = 20 minutes
   }
 
-  // stopSearching(){
-  //   this.toggleWarnings('');
-  // }
+  // Perform the search
+  performSearch(): void {
+    // Simulate a search operation
+    const result = `Result for "${this.searchQuery}" at ${new Date().toLocaleTimeString()}`;
+    this.searchResults.push(result);
+
+    console.log('Searching...', result);
+  }
+
+  // Stop the search process
+  stopSearch(): void {
+    if (this.searchInterval) {
+      clearInterval(this.searchInterval); // Stop the interval
+      this.searchInterval = null;
+    }
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout); // Stop the timeout
+      this.searchTimeout = null;
+    }
+    console.log('Search stopped.');
+  }
+
+  // Cleanup when the component is destroyed
+  ngOnDestroy(): void {
+    this.stopSearch(); // Ensure intervals and timeouts are cleared
+  }
 
   toggleModal(modal:string){
     if(modal == 'stopSearch'){

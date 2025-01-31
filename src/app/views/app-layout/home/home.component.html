@@ -1,13 +1,17 @@
-<!-- <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera to get started"></app-empty-page> -->
-
+<div *ngIf="connectedCameras.length<=0 ">
+  <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera to get started"></app-empty-page>
+</div>
 
 <div>
 
-  <div class="title text-xl pt-4">Connected Cameras</div>
+  <div class="mt-4" *ngIf="connectedCameras.length > 0">
+    <div class="title text-xl pt-4 pb-4 flex justify-between items-center">
+      Connected Cameras
 
-  <div class="mt-4">
-    <app-camera-card></app-camera-card>
-  </div>
+      <button (click)="route('/app/cameras')" class="px-4 py-2 bg-secondary active:bg-secondary/85 rounded-lg text-sm text-white">Add Camera</button>
+    </div>
+      <app-camera-card [cameras]="connectedCameras"></app-camera-card>
+    </div>
 </div>
 
 
@@ -21,6 +25,7 @@
       <p-table [value]="searchHistory"
                 [paginator]="true"
                 [rows]="5"
+                [loading] = "loading"
                 [rowsPerPageOptions]="[5, 10, 20]"
                 [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header">
@@ -70,7 +75,15 @@
                   <td class="py-4">{{ history.cameraLocation }}</td>
               </tr>
           </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">
+                  <app-empty-page (buttonAction)="route('/app/cameras')" message="You have not performed any search yet"></app-empty-page>
+                </td>
+            </tr>
+        </ng-template>
       </p-table>
   </div>
   </div>
+
 </div>

@@ -10,28 +10,28 @@
   <p-card styleClass="w-[400px] p-2">
     <div class="header text-2xl ">Connect Camera</div>
 
-    <form class="flex flex-col gap-3 mt-4">
+    <form [formGroup]="cameraForm" (ngSubmit)="saveCamera()" class="flex flex-col gap-3 mt-4">
 
       <div class="flex flex-col gap-1">
         <label for="name">Camera name</label>
-        <input type="text" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="Camera name">
+        <input formControlName="camera_name" type="text" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="IMEI">
       </div>
 
       <div class="flex flex-col gap-1">
         <label  for="name">Enter IMEI</label>
-        <input type="text" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="Camera name">
+        <input formControlName="imei" type="text" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="Camera name">
       </div>
 
 
       <div class="flex flex-col gap-1">
         <label  for="name">Enter password</label>
-        <input type="text" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="Camera name">
+        <input autocomplete="new-password" formControlName="password" type="password" class="px-4 py-2 text-sm rounded-md border text-gray-600 outline-none" placeholder="Password">
       </div>
 
 
-      <div class="flex flex-col gap-1 mt-4">
-        <p-button (onClick)="showDialog()" styleClass="bg-secondary w-full rounded-md px-3 py-3 text-sm text-white"  [loading]="loading" label="Connect camera"></p-button>
-      </div>
+      <button type="submit" class="flex flex-col gap-1 mt-4">
+        <p-button styleClass="bg-secondary w-full rounded-md px-3 py-3 text-sm text-white"  [loading]="loading" label="Connect camera"></p-button>
+      </button>
 
     </form>
   </p-card>

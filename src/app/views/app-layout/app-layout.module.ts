@@ -12,12 +12,13 @@ import { ManageDatabaseComponent } from './manage-database/manage-database.compo
 import { AnalyseVideoComponent } from './analyse-video/analyse-video.component';
 import { VideoReportComponent } from './video-report/video-report.component';
 import { AnalyseComponent } from './analyse/analyse.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadVideoComponent } from './analyse-video/upload-video/upload-video.component';
 import { ConnectCameraComponent } from './home/connect-camera/connect-camera.component';
 import { PrimengModule } from '../../primeng/primeng.module';
 import { SearchPageComponent } from './home/search-page/search-page.component';
 import { SearchDetailComponent } from './home/search-detail/search-detail.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { SearchDetailComponent } from './home/search-detail/search-detail.compon
     ConnectCameraComponent,
     SearchPageComponent,
     SearchDetailComponent,
+    NotificationComponent,
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { SearchDetailComponent } from './home/search-detail/search-detail.compon
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    FormsModule
   ]
 })
 export class AppLayoutModule { }
