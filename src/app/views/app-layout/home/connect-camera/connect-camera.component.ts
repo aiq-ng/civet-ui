@@ -1,9 +1,9 @@
-import { StorageService } from './../../../../../../../../dicon-ui/src/app/services/storage.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { HttpServiceService } from '../../../../services/http-service.service';
+import { StorageService } from '../../../../services/storage.service';
 
 @Component({
   selector: 'app-connect-camera',
