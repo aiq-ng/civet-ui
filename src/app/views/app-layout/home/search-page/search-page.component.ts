@@ -23,11 +23,8 @@ export class SearchPageComponent {
     searchTimeout: any; // Holds the timeout ID
 
 
-
-
-
-
     constructor(private router:Router, private searchService:SearchService){}
+
   ngOnInit() {
     this.items = [
         { label: 'Search results' },
