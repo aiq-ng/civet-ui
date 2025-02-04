@@ -4,7 +4,7 @@
   <div class="w-full grid grid-cols-3">
     <ng-container *ngFor="let camera of cameras">
       <!-- Card -->
-      <div class="p-2">
+      <div (click)="route('/app/live/' + camera.id)" class="p-2">
         <div class="group flex flex-col  w-full mr-2 h-full bg-white border border-gray-200 shadow-sm rounded-xl   ">
           <div class="h-[130px] flex flex-col justify-center items-center bg-gray-100 rounded-t-xl">
             <img src="/assets/images/cctv.png" class="w-[100px] h-[100px]" alt="">

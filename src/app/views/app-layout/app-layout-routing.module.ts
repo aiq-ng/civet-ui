@@ -24,7 +24,7 @@ const routes: Routes = [
       {path: 'manage-database', component: ManageDatabaseComponent},
       {path: 'search-page', component: SearchPageComponent},
       {path: 'notifications', component: NotificationComponent},
-      {path: 'live', component: LiveVideoMonitoringComponent},
+      {path: 'live/:id', component: LiveVideoMonitoringComponent},
 
     ]
   }

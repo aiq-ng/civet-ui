@@ -27,8 +27,8 @@
   </div>
 
 
-  <div *ngIf="notifications.length<=0 && loading" class="w-full flex justify-center items-center">
-    <i class="pi pi-spin pi-spinner-dotted" style="font-size: 2rem"></i>
+  <div *ngIf="notifications.length<=0 && loading">
+    <app-loader></app-loader>
   </div>
 
 

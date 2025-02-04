@@ -17,6 +17,7 @@ import { CameraCardComponent } from './camera-card/camera-card.component';
 import { RouterModule } from '@angular/router';
 import { SuccessModalComponent } from './success-modal/success-modal.component';
 import { WarningModalComponent } from './warning-modal/warning-modal.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -35,7 +36,8 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     EmptyPageComponent,
     CameraCardComponent,
     SuccessModalComponent,
-    WarningModalComponent
+    WarningModalComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +58,8 @@ import { WarningModalComponent } from './warning-modal/warning-modal.component';
     EmptyPageComponent,
     CameraCardComponent,
     SuccessModalComponent,
-    WarningModalComponent
+    WarningModalComponent,
+    LoaderComponent
 
   ]
 })

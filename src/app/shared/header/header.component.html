@@ -44,8 +44,9 @@
                   <div class="divider border-b w-full my-4"></div>
 
                   <div class="cameras flex gap-4 mt-2">
-                    <div class="card grid grid-cols-2 gap-6">
-                      <ng-container *ngFor="let camera of cameras">
+
+                    <div *ngIf="cameras?.length>0 " class="card grid grid-cols-2 gap-6">
+                      <ng-container  *ngFor="let camera of cameras">
                         <div class="flex align-items-center">
                           <p-checkbox
                               [(ngModel)]="selelctedCameras"
@@ -57,6 +58,13 @@
                       </div>
                       </ng-container>
 
+
+
+                  </div>
+                  <div (click)="op.toggle($event)" >
+                    <ng-container  *ngIf="cameras.length<=0">
+                      <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera to search"></app-empty-page>
+                    </ng-container>
                   </div>
                   </div>
                 </div>

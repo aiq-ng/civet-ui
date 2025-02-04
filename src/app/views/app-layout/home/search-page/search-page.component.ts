@@ -67,8 +67,10 @@ export class SearchPageComponent {
 
   // Start the search process
   continueSearching(): void {
+    this.keepSearching = true;
     if (!this.searchQuery) {
       alert('Please enter a search query.');
+      this.keepSearching = false;
       return;
     }
 
@@ -105,6 +107,7 @@ export class SearchPageComponent {
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout); // Stop the timeout
       this.searchTimeout = null;
+      this.keepSearching = false;
     }
     console.log('Search stopped.');
   }
@@ -132,7 +135,7 @@ export class SearchPageComponent {
   }
 
   terminateSearch(){
-  // terminalte search logic
+  this.stopSearch();
   this.keepSearching = false;
   this.toggleModal('success')
   }

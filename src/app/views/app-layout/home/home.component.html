@@ -1,16 +1,25 @@
-<div *ngIf="connectedCameras.length<=0 ">
-  <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera to get started"></app-empty-page>
-</div>
+
 
 <div>
 
-  <div class="mt-4" *ngIf="connectedCameras.length > 0">
+  <div class="mt-4" >
     <div class="title text-xl pt-4 pb-4 flex justify-between items-center">
       Connected Cameras
 
       <button (click)="route('/app/cameras')" class="px-4 py-2 bg-secondary active:bg-secondary/85 rounded-lg text-sm text-white">Add Camera</button>
     </div>
+
+    <ng-container *ngIf="connectedCameras.length > 0">
       <app-camera-card [cameras]="connectedCameras"></app-camera-card>
+    </ng-container>
+    </div>
+
+    <div *ngIf="connectedCameras.length<=0 && !cameraLoading ">
+      <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera to get started"></app-empty-page>
+    </div>
+
+    <div *ngIf="connectedCameras.length<=0 && cameraLoading">
+      <app-loader></app-loader>
     </div>
 </div>
 
@@ -25,7 +34,7 @@
       <p-table [value]="searchHistory"
                 [paginator]="true"
                 [rows]="5"
-                [loading] = "loading"
+                [loading] = "searchLoading"
                 [rowsPerPageOptions]="[5, 10, 20]"
                 [tableStyle]="{ 'min-width': '50rem' }">
           <ng-template pTemplate="header">
@@ -55,24 +64,27 @@
                     </div>
                   </th>
                   <th class="text-gray-800 font-medium py-3">Camera name</th>
-                  <th class="text-gray-800 font-medium py-3">Camera location</th>
+                  <th class="text-gray-800 font-medium py-3">Time</th>
               </tr>
           </ng-template>
           <ng-template pTemplate="body" let-history>
               <tr class="border text-gray-500">
-                  <td class="py-4">
-                    <span *ngIf="history.searchKeyword">{{ history.searchKeyword }}</span>
-                    <span *ngIf="history.image">
-                      <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="h-8 w-8 rounded-full " alt="">
+                  <td class="py-4 flex items-center gap-2">
+                    <span *ngIf="history.search_keyword">{{ history.search_keyword }}</span>
+                    <span >
+                      <img src={{history.image}} class="h-8 w-8 rounded-full " alt="">
                     </span>
                   </td>
                   <td class="py-4">
-                    <span *ngIf="history.objectType=='License plate' " class="px-4 py-1 rounded-full bg-gray-100 text-gray-600 text-xs">{{ history.objectType }}</span>
-                    <span *ngIf="history.objectType=='Facial recognition' " class="px-4 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">{{ history.objectType }}</span>
-                    <span *ngIf="history.objectType=='Animal' " class="px-4 py-1 rounded-full bg-green-100 text-success text-xs">{{ history.objectType }}</span>
+
+                    <span *ngIf="history.object_type=='license plate' " class="px-4 py-1 rounded-full bg-gray-100 text-gray-600 text-xs">{{ history.object_type }}</span>
+                    <span *ngIf="history.object_type=='facial recognition' " class="px-4 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">{{ history.object_type }}</span>
+                    <span *ngIf="history.object_type=='pet' " class="px-4 py-1 rounded-full bg-green-100 text-success text-xs">{{ history.object_type }}</span>
                   </td>
-                  <td class="py-4">{{ history.cameraName }}</td>
-                  <td class="py-4">{{ history.cameraLocation }}</td>
+                  <td class="py-4" *ngFor="let row of history.camera">
+                    <span>{{row}}</span>
+                  </td>
+                  <td class="py-4">{{ history.timestamp | date}}</td>
               </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">

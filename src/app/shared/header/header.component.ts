@@ -28,7 +28,7 @@ export class HeaderComponent {
   constructor(private config: PrimeNGConfig,
               private messageService: MessageService,
               private router:Router,
-              private camera:CameraService,
+              private cameraService:CameraService,
               private api: HttpServiceService,
               private searchService: SearchService) {}
 
@@ -49,7 +49,7 @@ export class HeaderComponent {
             }
         ];
         console.log('header activated');
-        this.camera.getCameras().subscribe(
+        this.cameraService?.getCameras().subscribe(
           res=>{
             this.cameras = res;
             console.log('connected cameras', this.cameras);
@@ -99,6 +99,17 @@ export class HeaderComponent {
       }
     )
   }
+
+  // getConnectedCameras(){
+  //   this.cameraService.getCameras().subscribe(
+  //     res=>{
+  //       this.connectedCameras = res;
+  //       console.log('connected cameras', this.connectedCameras);
+  //     }, err=>{
+  //       console.log(err);
+  //     }
+  //   )
+  // }
 
   checkAllCamera(){
     if(this.selelctedCameras.length === this.cameras.length){

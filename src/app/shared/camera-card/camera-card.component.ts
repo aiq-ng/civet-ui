@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-camera-card',
@@ -11,7 +12,7 @@ export class CameraCardComponent {
 
     responsiveOptions: any[] | undefined;
 
-    // constructor(private productService: ProductService) {}
+    constructor(private router:Router) {}
 
     ngOnInit() {
 
@@ -36,15 +37,10 @@ export class CameraCardComponent {
         ];
     }
 
-    // getSeverity(status: string) {
-    //     switch (status) {
-    //         case 'INSTOCK':
-    //             return 'success';
-    //         case 'LOWSTOCK':
-    //             return 'warning';
-    //         case 'OUTOFSTOCK':
-    //             return 'danger';
-    //     }
-    // }
+    route(page:string){
+      this.router.navigate([page]);
+    }
+
+
 
 }

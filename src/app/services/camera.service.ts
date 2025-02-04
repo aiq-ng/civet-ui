@@ -14,4 +14,8 @@ export class CameraService {
     return this.api.get('cameras/').pipe(map((res:any )=> res.results))
   }
 
+  getSingleCamera(id:any): Observable<any>{
+    return this.api.get(`cameras/${id}`).pipe(map((res:any )=> res))
+  }
+
 }

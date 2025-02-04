@@ -1,3 +1,4 @@
+import { CameraService } from './../../../services/camera.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -12,65 +13,18 @@ import { HttpServiceService } from '../../../services/http-service.service';
 export class HomeComponent {
   items:any;
   tableMenu:boolean = false;
-  loading:boolean = true;
+  cameraLoading:boolean = true;
+  searchLoading:boolean = true;
   connectedCameras?:any = [];
 
-  constructor(private router:Router, private storage:StorageService, private api:HttpServiceService){}
+  constructor(private router:Router,
+              private storage:StorageService,
+              private api:HttpServiceService,
+              private cameraService:CameraService){}
 
   searchHistory?:any;
 
   ngOnInit(){
-
-    // this.connectedCameras = [
-    //   {
-    //     "cameraName": "Camera 1",
-    //     "location": "Main Street",
-    //     "uptime": "12:34:56",
-    //     "status": "Online"
-    //   },
-    //   {
-    //     "cameraName": "Camera 2",
-    //     "location": "Park Avenue",
-    //     "uptime": "02:15:32",
-    //     "status": "Offline"
-    //   },
-    //   {
-    //     "cameraName": "Camera 3",
-    //     "location": "Highland Road",
-    //     "uptime": "48:12:08",
-    //     "status": "Online"
-    //   },
-    //   {
-    //     "cameraName": "Camera 4",
-    //     "location": "Market Square",
-    //     "uptime": "03:45:23",
-    //     "status": "Online"
-    //   },
-    //   {
-    //     "cameraName": "Camera 5",
-    //     "location": "Broadway",
-    //     "uptime": "27:23:19",
-    //     "status": "Offline"
-    //   },
-    //   {
-    //     "cameraName": "Camera 6",
-    //     "location": "Elm Street",
-    //     "uptime": "10:12:45",
-    //     "status": "Online"
-    //   },
-    //   {
-    //     "cameraName": "Camera 7",
-    //     "location": "Sunset Boulevard",
-    //     "uptime": "05:01:16",
-    //     "status": "Online"
-    //   },
-    //   {
-    //     "cameraName": "Camera 8",
-    //     "location": "Iwo Road",
-    //     "uptime": "24:56:23",
-    //     "status": "Online"
-    //   }
-    // ]
 
 
     this.searchHistory = [
@@ -125,10 +79,11 @@ export class HomeComponent {
   }
 
   getConnectedCameras(){
-    this.api.get('cameras/').subscribe(
+    this.cameraService.getCameras().subscribe(
       res=>{
-        let response:any = res;
-        this.connectedCameras = response.results;
+        this.connectedCameras = res;
+        console.log('connected cameras', this.connectedCameras);
+        this.cameraLoading=false;
       }, err=>{
         console.log(err);
       }
@@ -136,21 +91,19 @@ export class HomeComponent {
   }
 
   getSearchHistory(){
-    this.loading = true;
-    console.log('loading is', this.loading)
+    this.searchLoading = true;
+    console.log('loading is', this.searchLoading)
     this.api.get('search-history/').subscribe(
       res=>{
         let response:any = res;
         this.searchHistory = response.results;
-        console.log('connected cameras', this.searchHistory);
-        this.loading = false;
-        console.log('loading is', this.loading)
+        console.log('Search history', this.searchHistory);
+        this.searchLoading = false;
 
-        this.loading = false;
+        this.searchLoading = false;
       }, err=>{
         console.log(err);
-        this.loading = false;
-        console.log('loading is', this.loading)
+        this.searchLoading = false;
 
       }
     )

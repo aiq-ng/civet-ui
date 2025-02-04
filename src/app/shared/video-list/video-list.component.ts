@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-video-list',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './video-list.component.scss'
 })
 export class VideoListComponent {
+  @Input() cameraName!:string;
 
 }

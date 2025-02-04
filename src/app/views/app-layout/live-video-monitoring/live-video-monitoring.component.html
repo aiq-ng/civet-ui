@@ -3,7 +3,7 @@
     <!-- page title section -->
     <div class="page-title pt-8 pb-4  w-full flex justify-between">
         <div class="title text-2xl text-gray-800 flex gap-2 items-center">
-            <span class="font-bold">Video 04</span>
+            <span class="font-bold">{{cameraDetail?.camera_name}}</span>
             <span class="active:scale-95 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -28,17 +28,15 @@
     <div class="flex flex-col lg:flex-row gap-10">
         <div class="section-one w-full md:w-full lg:w-[65%] h-fit">
             <!-- video player section -->
-             <!-- <div class="video-player relative flex items-center bg-white w-full h-[70%]">
+             <div class="video-player relative flex items-center bg-white w-full h-[70%]">
               <div class=" w-full">
-                <video #videoElement autoplay controls class="w-full h-full min-h-[400px] rounded-lg shadow-lg">
-                  <source src="your-video.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <video id="video" controls autoplay class="w-[640px] lg:w-full lg:h-full h-[400px]"></video>
+                <!-- <video id="video" controls autoplay></video> -->
               </div>
 
               <div class=" bg-transparent bg-white  absolute top-[20%] left-[20px] rounded-md m-h-[150px] p-4 ">
                 <div class="flex flex-col gap-2 text-gray-800">
-                  <button class="flex gap-2 items-center text-sm " (click)="startStream()">
+                  <button class="flex gap-2 items-center text-sm " >
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cast" viewBox="0 0 16 16">
                         <path d="m7.646 9.354-3.792 3.792a.5.5 0 0 0 .353.854h7.586a.5.5 0 0 0 .354-.854L8.354 9.354a.5.5 0 0 0-.708 0"/>
@@ -51,7 +49,7 @@
                     </span>
 
                   </button>
-                  <button class="flex gap-2 items-center text-sm " (click)="stopStream()">
+                  <button class="flex gap-2 items-center text-sm " >
                     <span>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-stop-btn" viewBox="0 0 16 16">
                         <path d="M6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5z"/>
@@ -66,45 +64,54 @@
                   </button>
                 </div>
               </div>
-             </div> -->
+             </div>
 
 
-             <!-- <video #remoteVideo autoplay playsinline></video> -->
-
-             <video id="video" autoplay></video>
-
-
-
-             <div class="alert  mt-6 h-[67vh] overflow-y-auto custom-scrollbar" >
-                <div class="mb-4">
+             <div class="alert  mt-6  " >
+                <div class="mb-4 ">
                     <app-section-title title="Alerts" count='13'></app-section-title>
                 </div>
-                <div class=" bg-white" *ngFor="let row of alertData">
-                    <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
+                <div class=" bg-white h-[40vh] overflow-y-auto custom-scrollbar" >
+                  <ng-container *ngIf="alertData.length<=0 && !alertLoading ">
+                    <ng-container *ngFor="let row of alertData">
+                      <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} ></app-alert-list>
+                    </ng-container>
+                  </ng-container>
+                  <div *ngIf="alertData.length<=0 && !alertLoading ">
+                    <app-empty-page buttonName="" message="This footage does not have alerts. alert will apear when a match is found"></app-empty-page>
+                  </div>
                 </div>
              </div>
         </div>
         <div class="section-two w-full md:w-full lg:w-[35%] h-[92vh]">
 
-            <div class="h-[55%] overflow-y-auto custom-scrollbar">
-                <div class="mb-4">
-                    <app-section-title title="Active feeds" count='5'></app-section-title>
+          <div class="mb-4">
+              <app-section-title title="Active feeds" count='5'></app-section-title>
+          </div>
+            <div class="h-[100%] overflow-y-auto custom-scrollbar">
+                <div class="bg-white px-4 py-2" >
+                    <ng-container *ngIf="cameras?.length>0 && !cameraLoading">
+                      <ng-container *ngFor="let row of cameras">
+                        <div class="flex flex-col gap-2 pt-2">
+                          <app-video-list [cameraName]="row.camera_name"></app-video-list>
+                      </div>
+                      </ng-container>
+                    </ng-container>
                 </div>
-                <div class="bg-white px-4 py-2" *ngFor="let row of alertData">
-                    <div class="flex flex-col gap-2 pt-2">
-                        <app-video-list></app-video-list>
-                    </div>
+
+                <div *ngIf="cameras?.length<=0 && !cameraLoading ">
+                  <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera see cameras"></app-empty-page>
                 </div>
              </div>
 
-             <div class="alert  mt-12 h-[80vh] overflow-y-auto custom-scrollbar" >
+             <!-- <div class="alert  mt-12 h-[80vh] overflow-y-auto custom-scrollbar" >
                 <div class="mb-4">
                     <app-section-title title="Other alerts" count='5'></app-section-title>
                 </div>
                 <div class=" bg-white" *ngFor="let row of alertData">
                     <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
                 </div>
-             </div>
+             </div> -->
 
         </div>
     </div>
