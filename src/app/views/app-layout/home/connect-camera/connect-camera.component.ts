@@ -23,18 +23,18 @@ export class ConnectCameraComponent {
     ngOnInit() {
         this.items = [
             { label: 'Connect camera' },
-
         ];
 
         this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
 
         this.cameraForm = this.fb.group({
-          camera_name: [''],
-          imei: [''],
-          password: [''],
+          camera_name: ['', Validators.required],
+          imei: ['', Validators.required],
+          password: ['', Validators.required],
           location: ['Main street'],
           status: ['down'],
-          uptime: ['online']
+          uptime: ['online'],
+          footage_url: ['', Validators.required]
 
         });
     }

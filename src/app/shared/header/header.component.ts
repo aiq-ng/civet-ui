@@ -20,7 +20,7 @@ export class HeaderComponent {
   checkAll: any;
   totalSize : number = 0;
   loading:boolean = false;
-  searchType: string = ''
+  searchType: string = 'facial recognition'
   isCheck: boolean = false;
 
   totalSizePercent : number = 0;
@@ -63,14 +63,23 @@ export class HeaderComponent {
     }
 
 
-  handleSearch(){
-    this.search()
+
+
+  handleNormalSearch(){
+    console.log('search hit')
+    this.searchType = 'license plate'
     this.saveSearchHistory();
-    this.route('/app/search-page')
+    this.searchService.searchLicensePlate(this.keyword).subscribe(
+      res=>{
+        console.log('search results', res);
+        this.router.navigate(['app/search-page/'], {queryParams: { q: this.keyword}})
+      }
+    )
   }
 
-  search(){
-    // this.loading = true;
+  handleRealtimeSearch(){
+    this.saveSearchHistory();
+    this.route('/app/search-page')
   }
 
   saveSearchHistory(){

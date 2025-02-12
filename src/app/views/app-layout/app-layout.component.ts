@@ -12,7 +12,8 @@ export class AppLayoutComponent {
 
   constructor(private router: Router){}
 
-  ngOnInit(){}
+  ngOnInit(){
+  }
 
   toggleSignout(){
     this.signout = !this.signout;

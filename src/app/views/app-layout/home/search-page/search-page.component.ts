@@ -1,6 +1,6 @@
 import { SearchService } from './../../../../services/search.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 
@@ -14,6 +14,7 @@ export class SearchPageComponent {
     home: MenuItem | undefined;
     searchTime: number = 5;
     keepSearching:boolean = false;
+    searchLoading:boolean = false;
     isWarning:boolean  = false;
     isSuccess:boolean  = false;
     isTerminateSearch:boolean = false;
@@ -21,11 +22,20 @@ export class SearchPageComponent {
     searchResults: string[] = []; // Holds the search results
     searchInterval: any; // Holds the interval ID
     searchTimeout: any; // Holds the timeout ID
+    searchKeyword:any;
 
 
-    constructor(private router:Router, private searchService:SearchService){}
+
+    constructor(private router:Router, private activatedRoute: ActivatedRoute, private searchService:SearchService){}
 
   ngOnInit() {
+
+    this.activatedRoute.queryParams.subscribe( params => {
+      this.searchKeyword = params['q'] || '';
+      console.log('search keyword', this.searchKeyword)
+      this.performTextSearch(this.searchKeyword);
+    })
+
     this.items = [
         { label: 'Search results' },
 
@@ -40,6 +50,7 @@ export class SearchPageComponent {
 
     this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
   }
+
 
   increaseSearchTime(){
     if(this.searchTime < 120){
@@ -76,7 +87,7 @@ export class SearchPageComponent {
 
     // Start searching every 5 seconds
     this.searchInterval = setInterval(() => {
-      this.performSearch();
+      this.performImageSearch();
     }, 5000); // 5000ms = 5 seconds
 
     // Stop searching after 20 minutes (1200000ms)
@@ -86,8 +97,22 @@ export class SearchPageComponent {
     }, this.searchTime * 60 * 1000); // 1200000ms = 20 minutes
   }
 
-  // Perform the search
-  performSearch(): void {
+  // perform text search
+  performTextSearch(keyword:string): void {
+    console.log('performing text search')
+    this.searchService.searchLicensePlate(keyword).subscribe(
+      res => {
+        this.searchResults = res;
+        console.log('search results', this.searchResults);
+      }, err=>{
+        console.log(err);
+        this.searchResults = [];
+      }
+    )
+  }
+
+  // Perform image search
+  performImageSearch(): void {
     // Simulate a search operation
     const result = `Result for "${this.searchQuery}" at ${new Date().toLocaleTimeString()}`;
     this.searchResults.push(result);

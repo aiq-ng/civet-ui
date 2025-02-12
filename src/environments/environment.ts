@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  // baseUrl: 'http://127.0.0.1:8000/api/'
-  baseUrl: 'https://0ps.tech/api/'
+  baseUrl: 'http://127.0.0.1:8070/api/'
+  // baseUrl: 'https://0ps.tech/api/'
 };
 
 
