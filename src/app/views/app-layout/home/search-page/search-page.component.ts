@@ -19,16 +19,30 @@ export class SearchPageComponent {
     isSuccess:boolean  = false;
     isTerminateSearch:boolean = false;
     searchQuery: string = ''; // Holds the search query
-    searchResults: string[] = []; // Holds the search results
+    searchResults: any[] = []; // Holds the search results
     searchInterval: any; // Holds the interval ID
     searchTimeout: any; // Holds the timeout ID
     searchKeyword:any;
+    products:any;
 
 
 
     constructor(private router:Router, private activatedRoute: ActivatedRoute, private searchService:SearchService){}
 
   ngOnInit() {
+    this.products=[{
+      id: '1000',
+      code: 'f230fh0g3',
+      name: 'Bamboo Watch',
+      description: 'Product Description',
+      image: 'bamboo-watch.jpg',
+      price: 65,
+      category: 'Accessories',
+      quantity: 24,
+      inventoryStatus: 'INSTOCK',
+      rating: 5
+  },
+]
 
     this.activatedRoute.queryParams.subscribe( params => {
       this.searchKeyword = params['q'] || '';
@@ -49,7 +63,21 @@ export class SearchPageComponent {
     )
 
     this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
+
+
   }
+
+
+//   getSeverity(status: string) {
+//     switch (status) {
+//         case 'INSTOCK':
+//             return 'success';
+//         case 'LOWSTOCK':
+//             return 'warn';
+//         case 'OUTOFSTOCK':
+//             return 'danger';
+//     }
+// }
 
 
   increaseSearchTime(){

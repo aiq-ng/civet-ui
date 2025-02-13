@@ -20,14 +20,13 @@ export class NotificationComponent {
 
 
     ngOnInit(){
-      this.loading = true;
       this.items = [
         { label: 'Search results' }
       ];
 
-      this.notificationService.getNotifications().subscribe(
+      this.notificationService.getMessages().subscribe(
         res=>{
-          this.notifications= res.results;
+          this.notifications.push(res);
           this.mainData = res;
           console.log('notifications', this.notifications);
           this.loading = false;

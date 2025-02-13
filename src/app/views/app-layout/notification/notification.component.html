@@ -13,9 +13,9 @@
 <div class="mt-6 py-2 flex flex-col gap-4">
   <ng-container *ngFor="let notification of notifications">
     <div class="card ">
-      <p-card [header]="notification.title">
+      <p-card header="Notifications">
         <p class="m-0 truncate">
-            {{notification.message}}
+            {{notification}}
         </p>
     </p-card>
     </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NotificationService } from './services/notification.service';
 
 interface City {
   name: string,
@@ -27,6 +28,8 @@ export class AppComponent {
     { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
 ];
 
+constructor(private notificationService: NotificationService){}
+
 
 getSeverity(status: string) {
   switch (status) {
@@ -42,6 +45,11 @@ getSeverity(status: string) {
 }
 
     ngOnInit() {
+
+      this.notificationService.getMessages().subscribe((message) => {
+        console.log("Received notification:", message);
+      });
+
         this.cities = [
             {name: 'New York', code: 'NY'},
             {name: 'Rome', code: 'RM'},

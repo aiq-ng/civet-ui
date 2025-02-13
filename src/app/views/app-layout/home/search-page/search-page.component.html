@@ -114,7 +114,35 @@
       <app-empty-page message="I’m sorry...I got nothing.
       Adjust your search filters or keyword and try again?" buttonName="Back to search" (buttonAction)="route('/app/home')"></app-empty-page>
   }@else if (searchResults.length>0 && !searchLoading) {
-    <!-- display card -->
+
+        <div class="-m-1.5 overflow-auto mt-6">
+          <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="overflow-hidden">
+              <div class="table border-collapse table-auto w-full divide-y divide-gray-200">
+                <div class="table-header-group">
+                  <div class="table-row">
+                    <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Plate number</div>
+                    <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">First seen</div>
+                    <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Last seen</div>
+                    <div class="table-cell px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Vehicle class</div>
+                  </div>
+                </div>
+                <div class="table-row-group divide-y divide-gray-200 bg-white">
+                  <ng-container *ngFor="let result of searchResults">
+                    <div class="table-row" >
+                      <div class="table-cell px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{result.plate_number}}</div>
+                      <div class="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{result.first_seen | date}}</div>
+                      <div class="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{result.last_seen | date}}</div>
+                      <div class="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{result.vehicle_class}}</div>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
   }@else if(searchLoading){
     <div class="h-36 flex items-center justify-center">
       <app-loader></app-loader>

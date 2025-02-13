@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs';
 import { HttpServiceService } from './http-service.service';
 
@@ -8,11 +8,24 @@ import { HttpServiceService } from './http-service.service';
 })
 export class NotificationService {
 
-  constructor(private api:HttpServiceService) { }
+  private socket!:WebSocket;
+  private message: Subject<string> = new Subject<string>();
 
+  constructor() {
+    this.socket = new WebSocket('ws://localhost:8070/ws/notifications/?');
+    // this.socket = new WebSocket('ws://localhost:8070/ws/notifications/');
 
-  getNotifications(): Observable<any>{
-      return this.api.get('notifications/').pipe(map((res:any )=> res))
+    console.log('service hit')
+    this.socket.onmessage = (event)=>{
+      console.log('notification received', event.data)
+      const data = JSON.parse(event.data);
+      this.message.next(data.message);
     }
+  }
+
+
+  getMessages(){
+    return this.message.asObservable();
+  }
 
 }
