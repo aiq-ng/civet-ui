@@ -32,10 +32,10 @@ export class LiveVideoMonitoringComponent {
     const video = document.getElementById('video') as HTMLVideoElement;
     if (Hls.isSupported()) {
       const hls = new Hls();
-      hls.loadSource('http://103.124.107.209:8035/hls/output.m3u8');  // Your HLS stream URL
+      hls.loadSource(`http://103.124.107.209:8035/hls/output.m3u8?t=${Date.now()}`);  // Your HLS stream URL
       hls.attachMedia(video);
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'http://103.124.107.209:8035/hls/output.m3u8';
+      video.src = `http://103.124.107.209:8035/hls/output.m3u8?t=${Date.now()}`;
       video.play();
     }
   }
