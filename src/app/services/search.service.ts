@@ -8,12 +8,13 @@ import { HttpServiceService } from './http-service.service';
 export class SearchService {
 
 
-  private searchQuery = new BehaviorSubject <any>('');
+  private searchQuery = new BehaviorSubject <any>(null);
   searchQuery$ = this.searchQuery.asObservable();
 
   constructor(private api:HttpServiceService) { }
 
   setSearchQuery(query:any): void{
+    console.log('query from service', query)
     this.searchQuery.next(query);
   }
 
@@ -26,10 +27,19 @@ export class SearchService {
     return this.api.get(`license-plates/?q=${keyword}`).pipe(map((res:any)=> res))
   }
 
-  searchFacialRecognition(image:any): Observable<any>{
+  searchFacialRecognition(query:any): Observable<any>{
     const formData = new FormData()
-    formData.append('image', image);
-    return this.api.post('', formData).pipe(map((res:any)=> res))
+    return this.api.post('search/', formData).pipe(map((res:any)=> res))
+  }
+
+  saveSearchHistory(formData:any){
+    this.api.post('search-history/', formData).subscribe(
+      res=>{
+        console.log('search history saved', res);
+      }, err=>{
+        console.log('error saving search history', err);
+      }
+    )
   }
 
 }

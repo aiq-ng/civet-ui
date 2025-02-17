@@ -1,3 +1,4 @@
+import { keyframes } from '@angular/animations';
 import { SearchService } from './../../../../services/search.service';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,25 +31,15 @@ export class SearchPageComponent {
     constructor(private router:Router, private activatedRoute: ActivatedRoute, private searchService:SearchService){}
 
   ngOnInit() {
-    this.products=[{
-      id: '1000',
-      code: 'f230fh0g3',
-      name: 'Bamboo Watch',
-      description: 'Product Description',
-      image: 'bamboo-watch.jpg',
-      price: 65,
-      category: 'Accessories',
-      quantity: 24,
-      inventoryStatus: 'INSTOCK',
-      rating: 5
-  },
-]
 
+    console.log('welcome to search page')
     this.activatedRoute.queryParams.subscribe( params => {
-      this.searchKeyword = params['q'] || '';
+      console.log('activated params;', params['q'])
+      this.searchKeyword = params['q'] ;
       console.log('search keyword', this.searchKeyword)
-      this.performTextSearch(this.searchKeyword);
+      this.performSearch(this.searchKeyword);
     })
+
 
     this.items = [
         { label: 'Search results' },
@@ -63,21 +54,7 @@ export class SearchPageComponent {
     )
 
     this.home = { icon: 'pi pi-home', routerLink: '/app/home' };
-
-
   }
-
-
-//   getSeverity(status: string) {
-//     switch (status) {
-//         case 'INSTOCK':
-//             return 'success';
-//         case 'LOWSTOCK':
-//             return 'warn';
-//         case 'OUTOFSTOCK':
-//             return 'danger';
-//     }
-// }
 
 
   increaseSearchTime(){
@@ -125,27 +102,53 @@ export class SearchPageComponent {
     }, this.searchTime * 60 * 1000); // 1200000ms = 20 minutes
   }
 
+  performSearch(searchKeywork:string){
+    if(searchKeywork){
+      console.log('searching text')
+      this.performTextSearch(searchKeywork)
+
+    }else{
+      console.log('searching image')
+      this.performImageSearch()
+    }
+  }
+
   // perform text search
   performTextSearch(keyword:string): void {
     console.log('performing text search')
-    this.searchService.searchLicensePlate(keyword).subscribe(
+    if(keyword){
+      this.searchService.searchLicensePlate(keyword).subscribe(
+        res => {
+          this.searchResults = res;
+          console.log('search results', this.searchResults);
+        }, err=>{
+          console.log(err);
+          this.searchResults = [];
+        }
+      )
+    }else {
+    }
+  }
+
+  // Perform image search
+  performImageSearch(): void {
+    this.searchService.saveSearchHistory(this.searchQuery)
+    console.log('verifying search query', this.searchQuery)
+    this.searchService.searchFacialRecognition(this.searchQuery).subscribe(
       res => {
         this.searchResults = res;
         console.log('search results', this.searchResults);
+
+        const activity = `Result for "${this.searchQuery}" at ${new Date().toLocaleTimeString()}`;
+        this.searchResults.push(activity);
+
+        console.log('Searching...', activity);
       }, err=>{
         console.log(err);
         this.searchResults = [];
       }
     )
-  }
 
-  // Perform image search
-  performImageSearch(): void {
-    // Simulate a search operation
-    const result = `Result for "${this.searchQuery}" at ${new Date().toLocaleTimeString()}`;
-    this.searchResults.push(result);
-
-    console.log('Searching...', result);
   }
 
   // Stop the search process
@@ -189,6 +192,8 @@ export class SearchPageComponent {
   this.keepSearching = false;
   this.toggleModal('success')
   }
+
+
 
 
 }

@@ -20,7 +20,8 @@ export class HeaderComponent {
   checkAll: any;
   totalSize : number = 0;
   loading:boolean = false;
-  searchType: string = 'facial recognition'
+  faceSearchLoading:boolean = false;
+  searchType: string = 'license plate'
   isCheck: boolean = false;
 
   totalSizePercent : number = 0;
@@ -62,52 +63,58 @@ export class HeaderComponent {
       this.router.navigate([page]);
     }
 
+search(){
+  console.log('starting search')
+  let formData = new FormData()
+  if(this.keyword == ''){
+    formData.append('search_keyword', 'image')
+  }else{
+    formData.append('search_keyword', this.keyword)
+  }
+  formData.append('object_type', this.searchType)
+  formData.append('camera', JSON.stringify(this.selelctedCameras));
+  formData.append('image', this.file);
 
+  console.log('form data', formData);
 
+  this.searchService.setSearchQuery(formData);
 
-  handleNormalSearch(){
-    console.log('search hit')
-    this.searchType = 'license plate'
-    this.saveSearchHistory();
-    this.searchService.searchLicensePlate(this.keyword).subscribe(
-      res=>{
-        console.log('search results', res);
-        this.router.navigate(['app/search-page/'], {queryParams: { q: this.keyword}})
-      }
-    )
+  if(this.keyword != "" && this.searchType == 'license plate'){
+    console.log('performing text search')
+    // this.handleNormalSearch(formData)
+    this.router.navigate(['app/search-page/'], {queryParams: { q: this.keyword}})
+
+  }else {
+    console.log('performing face search')
+    // this.handleFaceSearch(formData)
+    this.router.navigate(['app/search-page/'])
+
   }
 
-  handleRealtimeSearch(){
-    this.saveSearchHistory();
-    this.route('/app/search-page')
-  }
+  // this.saveSearchHistory(formData)
 
-  saveSearchHistory(){
-    this.loading = true;
-    let formData = new FormData
-    if(this.keyword == ''){
-      formData.append('search_keyword', 'image')
-    }else{
-      formData.append('search_keyword', this.keyword)
-    }
-    formData.append('object_type', this.searchType)
-    formData.append('camera', JSON.stringify(this.selelctedCameras));
-    formData.append('image', this.file);
+}
 
-    console.log('form data', formData);
 
-    this.api.post('search-history/', formData).subscribe(
-      res=>{
-        console.log('search history saved', res);
-        this.loading = false;
-        this.searchService.setSearchQuery(formData);
-      }, err=>{
-        console.log('error saving search history', err);
-        this.searchService.setSearchQuery(formData);
-        this.loading = false;
-      }
-    )
-  }
+  // handleNormalSearch(formData:any){
+  //   console.log('search hit')
+  //   this.searchType = 'license plate'
+  //   this.saveSearchHistory(formData);
+  //   this.searchService.searchLicensePlate(this.keyword).subscribe(
+  //     res=>{
+  //       console.log('search results', res);
+  //       this.router.navigate(['app/search-page/'], {queryParams: { q: this.keyword}})
+  //     }
+  //   )
+  // }
+
+  // handleFaceSearch(formData:any){
+
+  //   this.saveSearchHistory(formData);
+  //   this.route('/app/search-page')
+  // }
+
+
 
   // getConnectedCameras(){
   //   this.cameraService.getCameras().subscribe(
@@ -145,6 +152,7 @@ export class HeaderComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.file = input.files[0];
+      console.log('image selected', this.file)
   }
   }
   private validateImageFile(file: File): boolean {

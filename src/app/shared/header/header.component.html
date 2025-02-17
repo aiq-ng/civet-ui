@@ -1,7 +1,7 @@
 <div class="flex justify-between items-center p-2 rounded-lg my-4 bg-gray-900 shadow-md">
   <div class="text-lg font-semibold text-gray-700">
       <!-- Search Input -->
-      <form (ngSubmit)="handleNormalSearch()"  class="w-full relative">
+      <form (ngSubmit)="search()"  class="w-full relative">
         <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
           <svg class="shrink-0 size-4 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </div>
@@ -121,7 +121,7 @@
 
 
               <div (click)="op.toggle($event)"  class="button w-full mt-8">
-                <p-button (onClick)="handleRealtimeSearch()" styleClass="bg-secondary px-4 py-3 text-white text-sm w-full rounded-md justify-center" [loading]="loading" label="Search"></p-button>
+                <p-button (onClick)="search()" styleClass="bg-secondary px-4 py-3 text-white text-sm w-full rounded-md justify-center" [loading]="loading" label="Search"></p-button>
               </div>
 
             </div>
