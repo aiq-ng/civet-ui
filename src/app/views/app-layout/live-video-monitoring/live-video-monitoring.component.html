@@ -12,27 +12,25 @@
             </span>
         </div>
 
-        <div class="button flex gap-2 text-sm border border-gray-400 rounded-md font-semibold active:scale-95 px-4 py-2">
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
-                    <path d="M11 2H9v3h2z"/>
-                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
-                  </svg>
-            </span>
-            <span>Save</span>
+        <div class="flex gap-2 items-center">
+          <p-button (onClick)="startRecording()" label="Record & Save" [loading]="startRecordingLoading" class="button flex gap-2 text-sm border border-gray-400 rounded-md font-semibold active:scale-95 px-4 py-2"></p-button>
+          <p-button (onClick)="stopRecording()" label="Stop Recording" [loading]="stopRecordingLoading" class="button flex gap-2 text-sm border border-gray-400 rounded-md font-semibold active:scale-95 px-4 py-2"></p-button>
         </div>
-
     </div>
 
     <!-- body section -->
     <div class="flex flex-col lg:flex-row gap-10">
         <div class="section-one w-full md:w-full lg:w-[65%] h-fit">
-            <!-- video player section -->
              <div class="video-player relative flex items-center bg-white w-full h-[70%]">
               <div class=" w-full">
-                <video id="video" controls autoplay class="w-[640px] lg:w-full lg:h-full h-[400px]"></video>
-                <!-- <video id="video" controls autoplay></video> -->
-              </div>
+                <div *ngIf="selectedVideoUrl" class="video-player">
+                  <video controls width="640" height="360" #myVideo>
+                    <source [src]="selectedVideoUrl" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+
+            </div>
 
               <div class=" bg-transparent bg-white  absolute top-[20%] left-[20px] rounded-md m-h-[150px] p-4 ">
                 <div class="flex flex-col gap-2 text-gray-800">
@@ -89,7 +87,12 @@
               <app-section-title title="Active feeds" count='5'></app-section-title>
           </div>
             <div class="h-[100%] overflow-y-auto custom-scrollbar">
-                <div class="bg-white px-4 py-2" >
+              <ng-container *ngFor="let video of cameraRecordings">
+
+              <app-video-list [cameraName]="video.timestamp" (loadVideo)="playVideo(video.file_path)"></app-video-list>
+
+              </ng-container>
+                <!-- <div class="bg-white px-4 py-2" >
                     <ng-container *ngIf="cameras?.length>0 && !cameraLoading">
                       <ng-container *ngFor="let row of cameras">
                         <div class="flex flex-col gap-2 pt-2">
@@ -101,7 +104,7 @@
 
                 <div *ngIf="cameras?.length<=0 && !cameraLoading ">
                   <app-empty-page buttonName="Connect camera" (buttonAction)="route('/app/cameras')" message="You don’t have any camera connected...connect a camera see cameras"></app-empty-page>
-                </div>
+                </div> -->
              </div>
 
              <!-- <div class="alert  mt-12 h-[80vh] overflow-y-auto custom-scrollbar" >
@@ -109,10 +112,11 @@
                     <app-section-title title="Other alerts" count='5'></app-section-title>
                 </div>
                 <div class=" bg-white" *ngFor="let row of alertData">
-                    <app-alert-list videoTitle={{row.video_title}} alertDetail={{row.alert_detail}} (viewClick)="viewAlert()"></app-alert-list>
+                    <app-alert-list videoTitle="hello video" alertDetail="" ></app-alert-list>
                 </div>
              </div> -->
 
         </div>
     </div>
 </div>
+

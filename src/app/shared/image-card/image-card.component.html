@@ -1,14 +1,12 @@
 
     <div class="card bg-white p-2 border w-full shadow-sm rounded-md flex flex-col gap-2">
       <div class="image h-[100px] w-full flex justify-center items-center bg-gray-100">
-        Snapshot
-        <!-- <img src="assets/img1.jpeg" class="object-cover w-full" alt="description"> -->
+        <img [src]="'http://127.0.0.1:8000' + '/media/faces/face_288_0.jpg'" class="object-contain w-full h-full" alt="description">
       </div>
 
             <div class="p-2 text-gray-500">
-                <div class="title font-normal">{{imageTitle}}</div>
+                <!-- <div class="title font-normal">{{imageTitle}}</div> -->
                 <span  class="px-4 py-1 rounded-full bg-gray-100 text-gray-600 text-xs">License plate</span>
-
             </div>
       </div>
 

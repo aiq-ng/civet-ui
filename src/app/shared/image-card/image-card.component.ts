@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter} from '@angular/core';
 })
 export class ImageCardComponent {
   @Input() imageTitle!: string;
+  @Input() imageLink!: string;
   @Input() displayTitle: boolean = true;
 
   @Output() buttonClicked= new EventEmitter();

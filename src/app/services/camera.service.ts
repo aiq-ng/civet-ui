@@ -18,4 +18,16 @@ export class CameraService {
     return this.api.get(`cameras/${id}`).pipe(map((res:any )=> res))
   }
 
+  startRecording(cameraId:any): Observable<any>{
+    return this.api.post(`start-recording/${cameraId}/`, {}).pipe(map((res:any )=> res))
+  }
+
+  stopRecording(cameraId:any): Observable<any>{
+    return this.api.post(`stop-recording/${cameraId}/`, {}).pipe(map((res:any )=> res))
+  }
+
+  getRecording(cameraId:any): Observable<any>{
+    return this.api.get(`recordings/${cameraId}/`).pipe(map((res:any)=> res))
+  }
+
 }

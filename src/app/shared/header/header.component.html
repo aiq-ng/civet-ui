@@ -100,7 +100,8 @@
 
                         <div class="button">
                         <div class="px-4 py-2 bg-blue-100 rounded-lg text-sm text-secondary">Browse Files</div>
-                        </div>
+                      </div>
+                      <p *ngIf="file">{{file.name}}</p>
 
                       </div>
                     </label>

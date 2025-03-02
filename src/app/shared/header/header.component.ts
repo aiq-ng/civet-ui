@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService, PrimeNGConfig} from 'primeng/api';
 import { CameraService } from '../../services/camera.service';
 import { HttpServiceService } from '../../services/http-service.service';
@@ -29,6 +29,7 @@ export class HeaderComponent {
   constructor(private config: PrimeNGConfig,
               private messageService: MessageService,
               private router:Router,
+              private activatedRoute: ActivatedRoute,
               private cameraService:CameraService,
               private api: HttpServiceService,
               private searchService: SearchService) {}
@@ -65,6 +66,16 @@ export class HeaderComponent {
 
 search(){
   console.log('starting search')
+
+
+  // this.activatedRoute.queryParams.subscribe( params => {
+  //   console.log('activated params;', params['q'])
+  //   let parameter = params['q'] ;
+  //   if(parameter){
+  //     this.goBack()
+  //   }
+  // })
+
   let formData = new FormData()
   if(this.keyword == ''){
     formData.append('search_keyword', 'image')
@@ -87,6 +98,7 @@ search(){
   }else {
     console.log('performing face search')
     // this.handleFaceSearch(formData)
+
     this.router.navigate(['app/search-page/'])
 
   }
@@ -95,25 +107,9 @@ search(){
 
 }
 
-
-  // handleNormalSearch(formData:any){
-  //   console.log('search hit')
-  //   this.searchType = 'license plate'
-  //   this.saveSearchHistory(formData);
-  //   this.searchService.searchLicensePlate(this.keyword).subscribe(
-  //     res=>{
-  //       console.log('search results', res);
-  //       this.router.navigate(['app/search-page/'], {queryParams: { q: this.keyword}})
-  //     }
-  //   )
-  // }
-
-  // handleFaceSearch(formData:any){
-
-  //   this.saveSearchHistory(formData);
-  //   this.route('/app/search-page')
-  // }
-
+goBack() {
+  window.history.back();
+}
 
 
   // getConnectedCameras(){
@@ -144,7 +140,12 @@ search(){
 
 
   selectSearchType(type:string){
-    this.searchType = type;
+    if(type=='facial recognition'){
+      this.keyword=''
+      this.searchType = type;
+    }else{
+      this.searchType = type;
+    }
     console.log('search type selected', type)
   }
 

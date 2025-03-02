@@ -7,5 +7,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class VideoListComponent {
   @Input() cameraName!:string;
+  @Output() loadVideo = new EventEmitter();
+
+  onClick(){
+    this.loadVideo.emit();
+  }
 
 }

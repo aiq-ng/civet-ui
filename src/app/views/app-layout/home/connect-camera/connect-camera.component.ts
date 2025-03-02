@@ -34,7 +34,7 @@ export class ConnectCameraComponent {
           location: ['Main street'],
           status: ['down'],
           uptime: ['online'],
-          footage_url: ['', Validators.required]
+          rtmp_url: ['', Validators.required]
 
         });
     }

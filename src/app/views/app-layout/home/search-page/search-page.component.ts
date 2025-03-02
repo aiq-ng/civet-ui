@@ -3,6 +3,7 @@ import { SearchService } from './../../../../services/search.service';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { HttpServiceService } from '../../../../services/http-service.service';
 
 
 @Component({
@@ -19,8 +20,9 @@ export class SearchPageComponent {
     isWarning:boolean  = false;
     isSuccess:boolean  = false;
     isTerminateSearch:boolean = false;
-    searchQuery: string = ''; // Holds the search query
+    searchQuery: any = ''; // Holds the search query
     searchResults: any[] = []; // Holds the search results
+    imageSearchResults:any;
     searchInterval: any; // Holds the interval ID
     searchTimeout: any; // Holds the timeout ID
     searchKeyword:any;
@@ -28,16 +30,19 @@ export class SearchPageComponent {
 
 
 
-    constructor(private router:Router, private activatedRoute: ActivatedRoute, private searchService:SearchService){}
+    constructor(
+                  private router:Router,
+                  private activatedRoute: ActivatedRoute,
+                  private searchService:SearchService,
+                  private api: HttpServiceService
+                ){}
 
   ngOnInit() {
-
     console.log('welcome to search page')
     this.activatedRoute.queryParams.subscribe( params => {
       console.log('activated params;', params['q'])
       this.searchKeyword = params['q'] ;
       console.log('search keyword', this.searchKeyword)
-      this.performSearch(this.searchKeyword);
     })
 
 
@@ -50,6 +55,9 @@ export class SearchPageComponent {
       query => {
         this.searchQuery = query;
         console.log('search query', this.searchQuery)
+        this.performSearch(this.searchKeyword, this.searchQuery)
+        // this.faceSearch(this.searchQuery)
+
       }
     )
 
@@ -102,14 +110,28 @@ export class SearchPageComponent {
     }, this.searchTime * 60 * 1000); // 1200000ms = 20 minutes
   }
 
-  performSearch(searchKeywork:string){
+  faceSearch(query:FormData){
+    this.searchLoading = true;
+    this.api.post('search/', query).subscribe(
+      res=>{
+        let response:any = res
+        this.imageSearchResults = response.matches
+        console.log('search results', this.imageSearchResults)
+        this.searchLoading = false;
+      }, err=>{
+        console.log(err)
+      }
+    )
+  }
+
+  performSearch(searchKeywork:string, imageQuery:any){
     if(searchKeywork){
       console.log('searching text')
       this.performTextSearch(searchKeywork)
 
     }else{
       console.log('searching image')
-      this.performImageSearch()
+      this.faceSearch(imageQuery)
     }
   }
 
@@ -120,10 +142,12 @@ export class SearchPageComponent {
       this.searchService.searchLicensePlate(keyword).subscribe(
         res => {
           this.searchResults = res;
+          this.imageSearchResults = []
           console.log('search results', this.searchResults);
         }, err=>{
           console.log(err);
           this.searchResults = [];
+          this.imageSearchResults = [];
         }
       )
     }else {
@@ -136,7 +160,8 @@ export class SearchPageComponent {
     console.log('verifying search query', this.searchQuery)
     this.searchService.searchFacialRecognition(this.searchQuery).subscribe(
       res => {
-        this.searchResults = res;
+        this.imageSearchResults = res;
+        this.searchResults = [];
         console.log('search results', this.searchResults);
 
         const activity = `Result for "${this.searchQuery}" at ${new Date().toLocaleTimeString()}`;
@@ -152,16 +177,18 @@ export class SearchPageComponent {
   }
 
   // Stop the search process
+
   stopSearch(): void {
     if (this.searchInterval) {
-      clearInterval(this.searchInterval); // Stop the interval
+      clearInterval(this.searchInterval);
       this.searchInterval = null;
     }
+
     if (this.searchTimeout) {
-      clearTimeout(this.searchTimeout); // Stop the timeout
+      clearTimeout(this.searchTimeout);
       this.searchTimeout = null;
-      this.keepSearching = false;
     }
+    this.keepSearching = false; // Important: Stop the search loop
     console.log('Search stopped.');
   }
 

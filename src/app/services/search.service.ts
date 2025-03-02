@@ -10,30 +10,39 @@ export class SearchService {
 
   private searchQuery = new BehaviorSubject <any>(null);
   searchQuery$ = this.searchQuery.asObservable();
+  imageSearchResult = new BehaviorSubject<any>(null);
+  imageSearchResult$ = this.imageSearchResult.asObservable();
 
   constructor(private api:HttpServiceService) { }
 
   setSearchQuery(query:any): void{
-    console.log('query from service', query)
     this.searchQuery.next(query);
+  }
+
+  setImageSearchResult(result:any): void{
+    this.imageSearchResult.next(result);
   }
 
 
   getSearchQuery(){
+    console.log('search result get', this.searchQuery.getValue());
     return this.searchQuery.getValue();
   }
 
+  getImageSearchResult(){
+    return this.imageSearchResult.getValue();
+  }
+
   searchLicensePlate(keyword:string): Observable<any>{
-    return this.api.get(`license-plates/?q=${keyword}`).pipe(map((res:any)=> res))
+    return this.api.get(`license-plates/?plate_number=${keyword}`).pipe(map((res:any)=> res))
   }
 
   searchFacialRecognition(query:any): Observable<any>{
-    const formData = new FormData()
-    return this.api.post('search/', formData).pipe(map((res:any)=> res))
+    return this.api.post('search/', query).pipe(map((res:any)=> res))
   }
 
-  saveSearchHistory(formData:any){
-    this.api.post('search-history/', formData).subscribe(
+  saveSearchHistory(query:any){
+    this.api.post('search-history/', query).subscribe(
       res=>{
         console.log('search history saved', res);
       }, err=>{
