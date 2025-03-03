@@ -62,6 +62,7 @@ export class LiveVideoMonitoringComponent {
       res=>{
         console.log('recording started', res)
         this.stopRecordingLoading = false;
+        this.getRecordings()
       }, err=>{
         console.log(err)
         this.stopRecordingLoading = false;

@@ -23,7 +23,7 @@
         <div class="section-one w-full md:w-full lg:w-[65%] h-fit">
              <div class="video-player relative flex items-center bg-white w-full h-[70%]">
               <div class=" w-full">
-                <div *ngIf="selectedVideoUrl" class="video-player">
+                <div class="video-player">
                   <video controls width="640" height="360" #myVideo>
                     <source [src]="selectedVideoUrl" type="video/mp4">
                     Your browser does not support the video tag.
@@ -84,7 +84,7 @@
         <div class="section-two w-full md:w-full lg:w-[35%] h-[92vh]">
 
           <div class="mb-4">
-              <app-section-title title="Active feeds" count='5'></app-section-title>
+              <app-section-title title="Recorded feeds" count='5'></app-section-title>
           </div>
             <div class="h-[100%] overflow-y-auto custom-scrollbar">
               <ng-container *ngFor="let video of cameraRecordings">
