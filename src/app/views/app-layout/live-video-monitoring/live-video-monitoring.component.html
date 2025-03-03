@@ -66,7 +66,7 @@
 
              <div class="alert  mt-6  " >
                 <div class="mb-4 ">
-                    <app-section-title title="Alerts" count='13'></app-section-title>
+                    <app-section-title title="Alerts" count='0'></app-section-title>
                 </div>
                 <div class=" bg-white h-[40vh] overflow-y-auto custom-scrollbar" >
                   <ng-container *ngIf="alertData.length<=0 && !alertLoading ">
@@ -83,7 +83,7 @@
         <div class="section-two w-full md:w-full lg:w-[35%] h-[92vh]">
 
           <div class="mb-4">
-              <app-section-title title="Recorded feeds" count='5'></app-section-title>
+              <app-section-title title="Recorded feeds" [count]='cameraRecordings.length'></app-section-title>
           </div>
             <div class="h-[100%] overflow-y-auto custom-scrollbar">
               <ng-container *ngFor="let video of cameraRecordings">

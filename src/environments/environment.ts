@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://41.73.6.101:8070/api/'
+  baseUrl: 'http://127.0.0.1:8070/api/'
   // baseUrl: 'https://0ps.tech/api/'
 };
 
