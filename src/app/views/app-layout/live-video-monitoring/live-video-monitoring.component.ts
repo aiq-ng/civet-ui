@@ -85,7 +85,7 @@ export class LiveVideoMonitoringComponent {
   }
 
   playVideo(videoUrl: string): void {
-    this.selectedVideoUrl = `http://127.0.0.1:8000${videoUrl}`
+    this.selectedVideoUrl = `http://41.73.6.101:8070${videoUrl}`
     this.reloadVideo();
   }
 
