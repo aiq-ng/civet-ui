@@ -75,7 +75,7 @@ export class LiveVideoMonitoringComponent {
       (res) => {
         this.cameraRecordings = res;
         console.log('recordings', this.cameraRecordings);
-        this.selectedVideoUrl = `http://127.0.0.1:8000/${this.extractRelativePath(this.cameraRecordings[5].file_path)}`;
+        this.selectedVideoUrl = `http://41.73.6.101:8070/${this.extractRelativePath(this.cameraRecordings[5].file_path)}`;
         this.reloadVideo(); // Force reload and play
       },
       (err) => {
