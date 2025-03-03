@@ -12,7 +12,7 @@ export class NotificationService {
   private message: Subject<string> = new Subject<string>();
 
   constructor() {
-    this.socket = new WebSocket('ws://41.73.6.101/:8070/ws/notifications/?');
+    this.socket = new WebSocket('ws://41.73.6.101:8070/ws/notifications/?');
     // this.socket = new WebSocket('ws://localhost:8070/ws/notifications/');
 
     console.log('service hit')
